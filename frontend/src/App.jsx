@@ -5,6 +5,7 @@ import BookingModal from './components/BookingModal';
 import AuthModal from './components/AuthModal';
 import AppointmentsView from './components/AppointmentsView';
 import AdminPortal from './components/AdminPortal';
+import { API_BASE } from './config';
 import {
   Sparkles,
   ShieldCheck,
@@ -40,7 +41,7 @@ export default function App() {
   const fetchDoctors = async () => {
     try {
       setLoadingDoctors(true);
-      const res = await fetch('/api/doctors');
+      const res = await fetch(`${API_BASE}/api/doctors`);
       const data = await res.json();
       setDoctors(data);
     } catch (err) {
@@ -53,7 +54,7 @@ export default function App() {
   // Fetch appointments
   const fetchAppointments = async () => {
     try {
-      const res = await fetch('/api/appointments');
+      const res = await fetch(`${API_BASE}/api/appointments`);
       const data = await res.json();
       setAppointments(data);
     } catch (err) {
@@ -65,7 +66,7 @@ export default function App() {
   useEffect(() => {
     const savedToken = localStorage.getItem('smilecare_token');
     if (savedToken) {
-      fetch('/api/auth/me', {
+      fetch(`${API_BASE}/api/auth/me`, {
         headers: { Authorization: `Bearer ${savedToken}` }
       })
         .then(res => {
@@ -129,7 +130,7 @@ export default function App() {
 
   const handleUpdateStatus = async (appointmentId, newStatus) => {
     try {
-      const res = await fetch(`/api/appointments/${appointmentId}/status`, {
+      const res = await fetch(`${API_BASE}/api/appointments/${appointmentId}/status`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -152,7 +153,7 @@ export default function App() {
   };
 
   const handleAddDoctor = async (doctorData) => {
-    const res = await fetch('/api/doctors', {
+    const res = await fetch(`${API_BASE}/api/doctors`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -169,7 +170,7 @@ export default function App() {
   const handleDeleteDoctor = async (doctorId) => {
     if (!window.confirm('Are you sure you want to remove this doctor from the clinic?')) return;
     try {
-      const res = await fetch(`/api/doctors/${doctorId}`, {
+      const res = await fetch(`${API_BASE}/api/doctors/${doctorId}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`

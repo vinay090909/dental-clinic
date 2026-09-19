@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { X, Lock, Mail, User, Phone, LogIn, UserPlus, Sparkles, AlertCircle, ShieldCheck } from 'lucide-react';
+import { API_BASE } from '../config';
 
 export default function AuthModal({ isOpen, onClose, onAuthSuccess }) {
   const dialogRef = useRef(null);
@@ -57,7 +58,7 @@ export default function AuthModal({ isOpen, onClose, onAuthSuccess }) {
     setLoading(true);
     setError('');
 
-    const endpoint = mode === 'signup' ? '/api/auth/signup' : '/api/auth/login';
+    const endpoint = mode === 'signup' ? `${API_BASE}/api/auth/signup` : `${API_BASE}/api/auth/login`;
     const payload = mode === 'signup'
       ? formData
       : { email: formData.email, password: formData.password };

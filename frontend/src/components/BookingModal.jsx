@@ -18,6 +18,7 @@ import {
   ShieldCheck,
   Lock
 } from 'lucide-react';
+import { API_BASE } from '../config';
 
 const ALL_TIME_SLOTS = [
   '10:00 AM',
@@ -94,7 +95,7 @@ export default function BookingModal({
 
       setLoadingSlots(true);
       try {
-        const res = await fetch(`/api/doctors/${formData.doctorId}/booked-slots?date=${formData.date}`);
+        const res = await fetch(`${API_BASE}/api/doctors/${formData.doctorId}/booked-slots?date=${formData.date}`);
         const data = await res.json();
         if (res.ok && data.bookedSlots) {
           setBookedSlots(data.bookedSlots);
@@ -190,7 +191,7 @@ export default function BookingModal({
     setError('');
 
     try {
-      const res = await fetch('/api/appointments', {
+      const res = await fetch(`${API_BASE}/api/appointments`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
